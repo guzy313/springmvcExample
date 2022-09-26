@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 通过properties标签加载外部properties -->
+    <properties  resource="conf/db.properties" />
+
+    <!-- 自定义别名 -->
+    <typeAliases>
+        <typeAlias type="com.my.domain.User" alias="user"></typeAlias>
+        <typeAlias type="com.my.domain.Orders" alias="orders"></typeAlias>
+    </typeAliases>
+
+    <!-- 配置插件 -->
+    <plugins>
+        <!-- mybatis分页插件 -->
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!-- 方言-不同的数据库不同的设置 -->
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
+
+
+    <environments default="datasource1">
+
+        <environment id="datasource1">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="username" value="${user}"></property>
+                <property name="password" value="${password}"></property>
+                <property name="url" value="${url}"></property>
+                <property name="driver" value="${driverClassName}"></property>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="com.my.mybatis.mappers/UserMapper.xml"></mapper>
+        <mapper resource="com.my.mybatis.mappers/OrdersMapper.xml"></mapper>
+    </mappers>
+
+
+</configuration>
